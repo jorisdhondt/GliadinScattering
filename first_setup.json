@@ -1,0 +1,60 @@
+
+
+{
+    "sequence": ["M","K","T","F","L","I","L","L","A"],
+    "aminoacid" : [{
+        "type":"N",
+        "radius": 1.59
+    },{
+        "type":"D",
+        "radius": 1.59
+    },{
+        "type":"Q",
+        "radius": 1.59
+    },{
+        "type":"E",
+        "radius": 1.59
+    },{
+        "type":"M",
+        "radius": 1.59
+    },{
+        "type":"P",
+        "radius": 1.59
+    },{
+        "type":"S",
+        "radius": 1.59
+    },{
+        "type":"T",
+        "radius": 1.59
+    },{
+        "type":"V",
+        "radius": 1.59
+    },{
+        "type":"R",
+        "radius": 1.91
+    },{
+        "type":"H",
+        "radius": 1.91
+    },{
+        "type":"K",
+        "radius": 1.91
+    },{
+        "type":"F",
+        "radius": 1.91
+    },{
+        "type":"W",
+        "radius": 1.91
+    },{
+        "type":"A",
+        "radius": 1.26
+    },{
+        "type":"C",
+        "radius": 1.26
+    },{
+        "type":"G",
+        "radius": 1.26
+    },{
+        "type":"L",
+        "radius": 1.26
+    }]
+}

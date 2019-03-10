@@ -1,17 +1,25 @@
 import math
 import random
 
-# Define an atom class
-class Atom:
-    def __init__(self, coor, radius):
+# Define an aminoacid class
+class Aminoacid:
+    def __init__(self, label,coor, radius):
+        self.label = label
         self.coor = coor
         self.radius = radius   #3 different sizes
+        self.bridgedAcides = NULL
 
         #angles between bonds 120 degrees
         #angle needs to be maintained, only doable via rotation
         #bonds have a certain length
         #sphere are the amino-acid
-        #
+        #disulphide bridge
+        #bonde stredge model
+        #hydrophobic energy
+
+
+        #maximum: (r1+r2)*1.2
+        #minimum: (r1+r2)
 
 
         #two options:
@@ -19,8 +27,17 @@ class Atom:
         # - necklace shaped
 
 
+        #50 enzymes
+
+
         self.epsilon = 1
         self.sigma = 2
+
+    def getBridgedAcides(self):
+        return self.bridgedAcides
+
+    def setBridgeAcid(self,acid):
+        self.bridgedAcides = self.bridgedAcides.add(acid)
 
     def getCoor(self):
         return self.coor
