@@ -1,60 +1,62 @@
-
-
 {
     "sequence": ["M","K","T","F","L","I","L","L","A"],
-    "aminoacid" : [{
+    "sequenced": ["M","K","T"],
+    "aminoacid" : {"N":{
         "type":"N",
         "radius": 1.59
-    },{
+    },"D":{
         "type":"D",
         "radius": 1.59
-    },{
+    },"Q":{
         "type":"Q",
         "radius": 1.59
-    },{
+    },"E":{
         "type":"E",
         "radius": 1.59
-    },{
+    },"M":{
         "type":"M",
         "radius": 1.59
-    },{
+    },"P":{
         "type":"P",
         "radius": 1.59
-    },{
+    },"S":{
         "type":"S",
         "radius": 1.59
-    },{
+    },"T":{
         "type":"T",
         "radius": 1.59
-    },{
+    },"V":{
         "type":"V",
         "radius": 1.59
-    },{
+    },"R":{
         "type":"R",
         "radius": 1.91
-    },{
+    },"H":{
         "type":"H",
         "radius": 1.91
-    },{
+    },"K":{
         "type":"K",
         "radius": 1.91
-    },{
+    },"F":{
         "type":"F",
         "radius": 1.91
-    },{
+    },"W":{
         "type":"W",
         "radius": 1.91
-    },{
+    },"A":{
         "type":"A",
         "radius": 1.26
-    },{
+    },"C":{
         "type":"C",
         "radius": 1.26
-    },{
+    },"G":{
         "type":"G",
         "radius": 1.26
-    },{
+    },"L":{
         "type":"L",
         "radius": 1.26
-    }]
+    },"I":{
+        "type":"L",
+        "radius": 1.26
+    }}
 }

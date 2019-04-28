@@ -1,5 +1,6 @@
 import math
 import random
+import math
 
 # Define an aminoacid class
 class Aminoacid:
@@ -7,7 +8,8 @@ class Aminoacid:
         self.label = label
         self.coor = coor
         self.radius = radius   #3 different sizes
-        self.bridgedAcides = NULL
+        self.bridgedAcides = None
+        self.previousCoor = None
 
         #angles between bonds 120 degrees
         #angle needs to be maintained, only doable via rotation
@@ -39,29 +41,46 @@ class Aminoacid:
     def setBridgeAcid(self,acid):
         self.bridgedAcides = self.bridgedAcides.add(acid)
 
-    def getCoor(self):
+    def revertPosition(self):
+        self.coor = self.previousCoor
+        self.previousCoor = None
+
+    def getPosition(self):
         return self.coor
 
     def getRadius(self):
         return self.radius
 
     def getLennartJonesPotential(self,atom):
-        coor1 = atom.getCoor()
-        coor2 = self.getCoor()
-        r = sqrt((coor1[0] - coor2[0])**2 + (coor1[1] - coor2[1])**2 + (coor1[2] - coor2[2])**2)
+        coor1 = atom.getPosition()
+        coor2 = self.getPosition()
+        r = math.sqrt((coor1[0] - coor2[0])**2 + (coor1[1] - coor2[1])**2 + (coor1[2] - coor2[2])**2)
+        epsilon = 0.5
+        sigma = 0.2
         power = 4*epsilon*((sigma/r)**12 - ((sigma/r))**6)
         return power
 
         #lattice new.
 
 
-    def translate(self,translate_max):
-        x_shift = random.uniform(-translate_max, translate_max)
-        y_shift = random.uniform(-translate_max, translate_max)
-        z_shift = random.uniform(-translate_max, translate_max)
+    def getElectricCharge(self):
+        if self.label == 'K' or self.label == "R" or self.label == "H":
+            return 1
+        elif self.label == "D" or self.label == "E":
+            return -1
+        else:
+            return 0
 
-        self.coor = self.coor + (x_shift,y_shift,z_shift)
+    def translate(self):
+        self.previousCoor = self.coor
+        x_shift = random.uniform(-0.1, 0.1)
+        y_shift = random.uniform(-0.1, 0.1)
+        z_shift = random.uniform(-0.1, 0.1)
+
+        delta = (x_shift,y_shift,z_shift)
+        self.coor = tuple(sum(t) for t in zip(self.coor, delta))
 
     def rotate(self):
         #not_necessary
         print("irrelevant")
+
