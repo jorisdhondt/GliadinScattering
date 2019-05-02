@@ -10,6 +10,7 @@ from scipy.constants import Boltzmann
 #from pygame.locals import *
 
 from matplotlib import pyplot as plt
+from mpl_toolkits import mplot3d
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation
 
@@ -35,6 +36,24 @@ import matplotlib.animation
 #     particles.set_data(box.state[:, 0], box.state[:, 1])
 #     particles.set_markersize(ms)
 #     return particles, rect
+
+
+# ax = plt.axes(projection='3d')
+#
+# # Data for a three-dimensional line
+# zline = np.linspace(0, 15, 1000)
+# xline = np.sin(zline)
+# yline = np.cos(zline)
+# ax.plot3D(xline, yline, zline, 'gray')
+#
+# # Data for three-dimensional scattered points
+# zdata = 15 * np.random.random(100)
+# xdata = np.sin(zdata) + 0.1 * np.random.randn(100)
+# ydata = np.cos(zdata) + 0.1 * np.random.randn(100)
+# ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens');
+
+fig = plt.figure()
+ax = plt.axes(projection='3d')
 
 
 naccept = 0
@@ -95,6 +114,24 @@ with open('first_setup.json') as json_file:
 
         print("Lowest energy: "+str(total_energy))
         print(gliadin.getPositions())
+        positions = gliadin.getPositions()
+        df = pd.DataFrame(positions, columns=['X', 'Y', 'Z'])
+
+        ax.scatter3D(df['X'], df['Y'],df['Z'], c=df['Z'], cmap='Greens');
+
+
+        #plt.pause(10)
+
+        # plt.figure()
+        # plt.ylim((-10, +10))
+        # plt.xlim((-10, +10))
+        # for i in range(len(positions)):
+        #     point = positions[i]
+        #     plt.plot(point[0], point[1], '*')
+        #     plt.show()
+        #     #time.sleep(1)
+
+        # plt.pause(1)
 
         # fig = plt.figure()
         # fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
