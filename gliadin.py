@@ -2,6 +2,7 @@ import random
 
 from aminoacid import Aminoacid
 import math
+import numpy as np
 
 # Define an atom class
 class Gliadin:
@@ -41,6 +42,25 @@ class Gliadin:
     def getPositions(self):
         return [self.aminoacids[i].getPosition() for i in range(self.getLength())]
 
+    def _unit_vector(self,vector):
+        """ Returns the unit vector of the vector.  """
+        return vector / np.linalg.norm(vector)
+
+    def getAngle(self,i,j,k):
+        #coordinates are (x,y,z) tuples
+        p1 = self.aminoacids[i].getPosition()
+        p2 = self.aminoacids[j].getPosition()
+        p3 = self.aminoacids[k].getPosition()
+
+        v1 = (p2[0] - p1[0],p2[1]-p1[0],p2[2]-p1[2])
+        v2 = (p3[0] - p2[0],p3[1]-p2[0],p3[2]-p2[2])
+
+        v1_u = self._unit_vector(v1)
+        v2_u = self._unit_vector(v2)
+        return np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0))
+
+
+
     def validChain(self):
         result = True
         for i in range(len(self.aminoacids)):
@@ -52,6 +72,13 @@ class Gliadin:
                     radius2 = self.aminoacids[j].getRadius()
                     dist = math.sqrt((coor1[0] - coor2[0])**2 + (coor1[1] - coor2[1])**2 + (coor1[2] - coor2[2])**2)
                     if dist < radius1 + radius2:
+                        result = False
+                        break
+
+        for i in range(len(self.aminoacids)):
+            for j in range(i+1,len(self.aminoacids)):
+                for k in range(j+1,len(self.aminoacids)):
+                    if self.getAngle(i,j,k) > 2.0944:
                         result = False
                         break
         return result
