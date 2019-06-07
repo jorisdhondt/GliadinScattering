@@ -52,9 +52,18 @@ import matplotlib.animation
 # ydata = np.cos(zdata) + 0.1 * np.random.randn(100)
 # ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens');
 
-fig = plt.figure()
-ax = plt.axes(projection='3d')
+a = np.random.rand(2000, 3)*10
+t = np.array([np.ones(100)*i for i in range(20)]).flatten()
+df = pd.DataFrame({"time": t ,"x" : a[:,0], "y" : a[:,1], "z" : a[:,2]})
 
+def update_graph(num):
+    graph._offsets3d = (df.x, df.y, df.z)
+    #title.set_text('3D Test, time={}'.format(num))
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+title = ax.set_title('3D Test')
 
 naccept = 0
 nreject = 0
@@ -115,9 +124,12 @@ with open('first_setup.json') as json_file:
         print("Lowest energy: "+str(total_energy))
         print(gliadin.getPositions())
         positions = gliadin.getPositions()
-        df = pd.DataFrame(positions, columns=['X', 'Y', 'Z'])
+        df = pd.DataFrame(positions, columns=['x', 'y', 'z'])
+        graph = ax.scatter(df.x, df.y, df.z)
 
-        ax.scatter3D(df['X'], df['Y'],df['Z'], c=df['Z'], cmap='Greens');
+        ani = matplotlib.animation.FuncAnimation(fig, update_graph, 19,interval=40, blit=False)
+
+        plt.show()
 
 
         #plt.pause(10)
