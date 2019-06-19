@@ -63,23 +63,35 @@ import pandas as pd
 #t = np.array([np.ones(100)*i for i in range(20)]).flatten()
 #df = pd.DataFrame({"time": t ,"x" : a[:,0], "y" : a[:,1], "z" : a[:,2]})
 
-def update_graph(num):
-    data=positionsHistory[positionsHistory['time']==num]
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+title = ax.set_title('3D Test')
+
+#def update_graph(num):
+#    data=positionsHistory[positionsHistory['time']==num]
+#    graph._offsets3d = (data.x, data.y, data.z)
+#    title.set_text('3D Test, time={}'.format(num))
+
+def update_lines(num,lines):
+    data = positionsHistory[positionsHistory['time'] == num]
     graph._offsets3d = (data.x, data.y, data.z)
     title.set_text('3D Test, time={}'.format(num))
 
 
+    for line, data in zip(lines, dataLines):
+        # NOTE: there is no .set_data() for 3 dim data...
+        line.set_data(data[0:2, :num])
+        line.set_3d_properties(data[2, :num])
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-title = ax.set_title('3D Test')
+
+
 
 naccept = 0
 nreject = 0
 with open('first_setup.json') as json_file:
     input_json = json.load(json_file)
 
-    nbofiterations = 1000
+    nbofiterations = 5
 
     gliadin_medium = Medium(input_json['sequence'], input_json['aminoacid'])
     mediumSize = gliadin_medium.getNbOfGliadin()
@@ -135,13 +147,6 @@ with open('first_setup.json') as json_file:
         print(gliadin.getPositions())
         positions = gliadin.getPositions()
         df = pd.DataFrame(positions, columns=['x', 'y', 'z'])
-<<<<<<< HEAD
-        graph = ax.scatter(df.x, df.y, df.z)
-
-        ani = matplotlib.animation.FuncAnimation(fig, update_graph, 19,interval=40, blit=False)
-
-        plt.show()
-=======
         df['time'] = i
         if i ==0:
             df['time'] = i
@@ -152,7 +157,6 @@ with open('first_setup.json') as json_file:
 
         i = i+1
         #ax.scatter3D(df['X'], df['Y'],df['Z'], c=df['Z'], cmap='Greens');
->>>>>>> 54c07ba3f68e80e4e6b33bfa9854fa9451eaaddf
 
 
         #plt.pause(10)
@@ -200,12 +204,17 @@ with open('first_setup.json') as json_file:
     title = ax.set_title('3D Test')
 
     data = positionsHistory[positionsHistory['time'] == 0]
+    lines = ax.plot([VecStart_x[i], VecEnd_x[i]], [VecStart_y[i], VecEnd_y[i]], zs=[VecStart_z[i], VecEnd_z[i]])
+    lines = [ax.plot(dat.x)[0] for dat in data]
     graph = ax.scatter(data.x, data.y, data.z)
-    ax.set_xlim([-10, 10])
-    ax.set_ylim([-10, 10])
+    ax.set_xlim([-3, 3])
+    ax.set_ylim([-3, 100])
     ax.set_zlim([-10, 10])
+    #lines = [ax.plot(dat[0, 0:1], dat[1, 0:1], dat[2, 0:1])[0] for dat in data]
+    #ani = matplotlib.animation.FuncAnimation(fig, update_graph, nbofiterations,
+    #                                         interval=100, blit=False)
 
-    ani = matplotlib.animation.FuncAnimation(fig, update_graph, nbofiterations,
-                                             interval=400, blit=False)
+    line_ani = matplotlib.animation.FuncAnimation(fig, update_lines, nbofiterations,fargs=(lines)
+                                       interval=100, blit=False)
 
     plt.show()
