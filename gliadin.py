@@ -11,11 +11,16 @@ class Gliadin:
 
         self.aminoacids = []
         j = 0
-        for i in chain:
+        angledistance = 4/math.sqrt(3)
+        for i, val in enumerate(chain):
+        #for i in chain:
             r=4
             #coor = (0,1*(r-1),0)
-            coor = (0,r*j,0)
-            self.aminoacids.append(Aminoacid(i,coor,config[i]["radius"]))
+            if i%2 == 1:
+                coor = (angledistance,r*j,0)
+            else:
+                coor = (0,r*j,0)
+            self.aminoacids.append(Aminoacid(val,coor,config[val]["radius"]))
             j = j + 1
 
 

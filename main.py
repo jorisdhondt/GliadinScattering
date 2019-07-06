@@ -67,10 +67,10 @@ fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 title = ax.set_title('3D Test')
 
-#def update_graph(num):
-#    data=positionsHistory[positionsHistory['time']==num]
-#    graph._offsets3d = (data.x, data.y, data.z)
-#    title.set_text('3D Test, time={}'.format(num))
+def update_graph(num):
+    data=positionsHistory[positionsHistory['time']==num]
+    graph._offsets3d = (data.x, data.y, data.z)
+    title.set_text('3D Test, time={}'.format(num))
 
 def update_lines(num,lines):
     data = positionsHistory[positionsHistory['time'] == num]
@@ -84,16 +84,14 @@ def update_lines(num,lines):
         line.set_3d_properties(data[2, :num])
 
 
-
-
 naccept = 0
 nreject = 0
 with open('first_setup.json') as json_file:
     input_json = json.load(json_file)
 
-    nbofiterations = 5
+    nbofiterations = 1000
 
-    gliadin_medium = Medium(input_json['sequence'], input_json['aminoacid'])
+    gliadin_medium = Medium(input_json['sequenceb'], input_json['aminoacid'])
     mediumSize = gliadin_medium.getNbOfGliadin()
     #water
 
@@ -204,17 +202,28 @@ with open('first_setup.json') as json_file:
     title = ax.set_title('3D Test')
 
     data = positionsHistory[positionsHistory['time'] == 0]
-    lines = ax.plot([VecStart_x[i], VecEnd_x[i]], [VecStart_y[i], VecEnd_y[i]], zs=[VecStart_z[i], VecEnd_z[i]])
-    lines = [ax.plot(dat.x)[0] for dat in data]
-    graph = ax.scatter(data.x, data.y, data.z)
-    ax.set_xlim([-3, 3])
-    ax.set_ylim([-3, 100])
-    ax.set_zlim([-10, 10])
-    #lines = [ax.plot(dat[0, 0:1], dat[1, 0:1], dat[2, 0:1])[0] for dat in data]
-    #ani = matplotlib.animation.FuncAnimation(fig, update_graph, nbofiterations,
-    #                                         interval=100, blit=False)
+    q = range(len(data))
+    #l = [([data[i,'x'],data[i+1,'x']],[data[i,'y'],data[i+1,'y']],[data[i,'z'],data[i+1,'z']) for i in range(len(data)-1)]
+    #lines = [ax.plot([data[i,'x'],data[i+1,'x']],[data[i,'y'],data[i+1,'y']],zs = [data[i,'z'],data[i+1,'z']]) for i in range(len(data)-1)]
+    #lines = [
+    #    ([data[i, 'x'], data[i + 1, 'x']], [data[i, 'y'], data[i + 1, 'y']])
+    #    for i in range(len(data) - 1)]
 
-    line_ani = matplotlib.animation.FuncAnimation(fig, update_lines, nbofiterations,fargs=(lines)
-                                       interval=100, blit=False)
+    #lines = [ax.plot(dat[0, 0:1], dat[1, 0:1], dat[2, 0:1])[0] for dat in data]
+
+    #lines = ax.plot([VecStart_x[i], VecEnd_x[i]], [VecStart_y[i], VecEnd_y[i]], zs=[VecStart_z[i], VecEnd_z[i]])
+    #lines = [ax.plot(dat.x)[0] for dat in data]
+    graph = ax.scatter(data.x, data.y, data.z)
+    ax.set_xlim([-5, 5])
+    ax.set_ylim([-5, 50])
+    ax.set_zlim([-5, 5])
+    plt.gca().set_aspect('equal', adjustable='box')
+    #plt.axis('scaled')
+    #lines = [ax.plot(dat[0, 0:1], dat[1, 0:1], dat[2, 0:1])[0] for dat in data]
+    ani = matplotlib.animation.FuncAnimation(fig, update_graph, nbofiterations,
+                                             interval=100, blit=False)
+
+    #line_ani = matplotlib.animation.FuncAnimation(fig, update_lines, nbofiterations,fargs=(lines),
+    #                                   interval=100, blit=False)
 
     plt.show()
