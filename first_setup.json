@@ -57,9 +57,11 @@
         "radius": 1.26
     },"Y":{
         "type":"Y",
-        "radius": 1.26
+        "radius": 1.91
     },"I":{
         "type":"I",
-        "radius": 1.26
-    }}
+        "radius": 1.59
+    },
+    "disulfideBonds": [["AA",[142,172]],["BB",[173,259]],["CC",[185,268]]]
+    }
 }
