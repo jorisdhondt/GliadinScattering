@@ -6,29 +6,46 @@ import numpy as np
 
 # Define an atom class
 class Gliadin:
-    def __init__(self, chain,config):
+    def __init__(self):
+        
+
         #config = MKTFLILALL
 
-        self.aminoacids = []
-        j = 0
-        angledistance = 4/math.sqrt(3)
-        for i, val in enumerate(chain):
+        #self.aminoacids = []
+        #j = 0
+        #angledistance = 4/math.sqrt(3)
+        #for i, val in enumerate(chain):
         #for i in chain:
-            r=4
+        #    r=4
             #coor = (0,1*(r-1),0)
-            if i%2 == 1:
-                coor = (angledistance,r*j,0)
-            else:
-                coor = (0,r*j,0)
-            self.aminoacids.append(Aminoacid(val,coor,config[val]["radius"]))
-            j = j + 1
+        #    if i%2 == 1:
+        #        coor = (angledistance,r*j,0)
+        #    else:
+        #        coor = (0,r*j,0)
+        #    self.aminoacids.append(Aminoacid(val,coor,config[val]["radius"]))
+        #    j = j + 1
+        self.disulfideBonds = None
+        self.atoms = None
+        #self.disulfideBonds = config["disulfideBonds"]
 
+
+    def addAtom(self,atom):
+        self.atoms.append(atom)
+        #find suitable position
+
+    #def addAminoAcid(self,amino):
+    #    self.aminoacids.append(Aminoacid(val, coor, config[val]["radius"]))
+
+    def addAASideChain(self,sidechain):
+        self.atom.setSideChain(sidechain)
+
+    def addDisulfideBonds(self,position1,position2):
+        self.disulfideBonds.append([position1,position2])
 
     def randomTranslate(self,i):
         self.aminoacids[i].translate()
         if not self.validChain():
             self.revertPosition(i)
-
 
     def revertPosition(self,i):
         self.aminoacids[i].revertPosition()
