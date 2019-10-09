@@ -20,7 +20,7 @@ class Gliadin:
                 coor = (angledistance,r*j,0)
             else:
                 coor = (0,r*j,0)
-            self.aminoacids.append(Aminoacid(val,coor,config[val]["radius"]))
+            self.aminoacids.append(Aminoacid(val,config[val]["abbr"],coor,config[val]["radius"]))
             j = j + 1
 
 
@@ -29,12 +29,14 @@ class Gliadin:
         if not self.validChain():
             self.revertPosition(i)
 
-
     def revertPosition(self,i):
         self.aminoacids[i].revertPosition()
 
     def getAminoAcidAtPosition(self,i):
         return(self.aminoacids[i])
+
+    def getAminoAcids(self):
+        return(self.aminoacids)
 
     def getLength(self):
         return len(self.aminoacids)
