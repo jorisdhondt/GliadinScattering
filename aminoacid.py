@@ -4,8 +4,9 @@ import math
 
 # Define an aminoacid class
 class Aminoacid:
-    def __init__(self, label,coor, radius):
+    def __init__(self, label, abbrevation,coor, radius):
         self.label = label
+        self.abbreviation = abbrevation
         self.coor = coor
         self.radius = radius   #3 different sizes
         self.bridgedAcides = None

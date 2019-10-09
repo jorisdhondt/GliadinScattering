@@ -53,6 +53,9 @@ class Gliadin:
     def getAminoAcidAtPosition(self,i):
         return(self.aminoacids[i])
 
+    def getAminoAcids(self):
+        return(self.aminoacids)
+
     def getLength(self):
         return len(self.aminoacids)
 
