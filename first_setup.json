@@ -3,64 +3,84 @@
     "sequenced": ["M","K","T"],
     "aminoacid" : {"N":{
         "type":"N",
-        "radius": 1.59
+        "radius": 1.59,
+        "abbr": "ASN"
     },"D":{
         "type":"D",
-        "radius": 1.59
+        "radius": 1.59,
+        "abbr": "ASP"
     },"Q":{
         "type":"Q",
-        "radius": 1.59
+        "radius": 1.59,
+        "abbr": "GLN"
     },"E":{
         "type":"E",
-        "radius": 1.59
+        "radius": 1.59,
+        "abbr": "GLU"
     },"M":{
         "type":"M",
-        "radius": 1.59
+        "radius": 1.59,
+        "abbr": "MET"
     },"P":{
         "type":"P",
-        "radius": 1.59
+        "radius": 1.59,
+        "abbr": "PRO"
     },"S":{
         "type":"S",
-        "radius": 1.59
+        "radius": 1.59,
+        "abbr": "SER"
     },"T":{
         "type":"T",
-        "radius": 1.59
+        "radius": 1.59,
+        "abbr": "THR"
     },"V":{
         "type":"V",
-        "radius": 1.59
+        "radius": 1.59,
+        "abbr": "VAL"
     },"R":{
         "type":"R",
-        "radius": 1.91
+        "radius": 1.91,
+        "abbr": "ARG"
     },"H":{
         "type":"H",
-        "radius": 1.91
+        "radius": 1.91,
+        "abbr": "HIS"
     },"K":{
         "type":"K",
-        "radius": 1.91
+        "radius": 1.91,
+        "abbr": "LYS"
     },"F":{
         "type":"F",
-        "radius": 1.91
+        "radius": 1.91,
+        "abbr": "PHE"
     },"W":{
         "type":"W",
-        "radius": 1.91
+        "radius": 1.91,
+        "abbr": "TRP"
     },"A":{
         "type":"A",
-        "radius": 1.26
+        "radius": 1.26,
+        "abbr": "ALA"
     },"C":{
         "type":"C",
-        "radius": 1.26
+        "radius": 1.26,
+        "abbr": "CYS"
     },"G":{
         "type":"G",
-        "radius": 1.26
+        "radius": 1.26,
+        "abbr": "GLY"
     },"L":{
         "type":"L",
-        "radius": 1.26
+        "radius": 1.26,
+        "abbr": "LEU"
     },"Y":{
         "type":"Y",
-        "radius": 1.91
+        "radius": 1.91,
+        "abbr": "TYR"
     },"I":{
         "type":"I",
-        "radius": 1.59
+        "radius": 1.59,
+        "abbr": "ILE"
     },
     "disulfideBonds": [["AA",[142,172]],["BB",[173,259]],["CC",[185,268]]]
     }
