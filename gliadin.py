@@ -8,7 +8,7 @@ import numpy as np
 # Define an atom class
 class Gliadin:
     def __init__(self, sequence):
-        self.atoms = None
+        self.atoms = []
         initialCoor = coor = (0,0,0)
         j=0
         for i in sequence:
