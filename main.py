@@ -91,7 +91,7 @@ with open('first_setup.json') as json_file:
 
     nbofiterations = 1000
 
-    gliadin_medium = Medium(input_json['sequenceb'], input_json['aminoacid'])
+    gliadin_medium = Medium(input_json['sequenced'], input_json['aminoacid'])
     mediumSize = gliadin_medium.getNbOfGliadin()
     #water
 

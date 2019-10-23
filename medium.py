@@ -14,7 +14,7 @@ class Medium:
         self.COM = [0.0, 0.0, 0.0]
 
         for i in range(0, self.nbofSequences):
-            self.sequenceCollection.append(Gliadin(sequence,config))
+            self.sequenceCollection.append(Gliadin(sequence))
 
     def getEnergy(self):
         energylevel = 0
@@ -27,3 +27,6 @@ class Medium:
 
     def getNbOfGliadin(self):
         return len(self.sequenceCollection)
+
+    def getConfig(self):
+        return self.config

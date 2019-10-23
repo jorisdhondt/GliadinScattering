@@ -1,13 +1,26 @@
 import random
 
 from aminoacid import Aminoacid
+from atom import Atom
 import math
 import numpy as np
 
 # Define an atom class
 class Gliadin:
-    def __init__(self):
-        
+    def __init__(self, sequence):
+        self.atoms = None
+        initialCoor = coor = (0,0,0)
+        j=0
+        for i in sequence:
+            if j == 0:
+                newAtom = Atom(initialCoor, 0.3)
+                self.addAtom(newAtom)
+            else:
+                if j%2 == 1:
+                    coor = (j*1.299,-0.75,0)
+                else:
+                    coor = (j * 1.299, 0 , 0)
+            j = j+1
 
         #config = MKTFLILALL
 
@@ -25,7 +38,7 @@ class Gliadin:
         #    self.aminoacids.append(Aminoacid(val,coor,config[val]["radius"]))
         #    j = j + 1
         self.disulfideBonds = None
-        self.atoms = None
+
         #self.disulfideBonds = config["disulfideBonds"]
 
 
