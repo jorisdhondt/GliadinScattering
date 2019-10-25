@@ -20,6 +20,8 @@ class Gliadin:
                     coor = (j*1.299,-0.75,0)
                 else:
                     coor = (j * 1.299, 0 , 0)
+                newAtom = Atom(coor, 0.3)
+                self.addAtom(newAtom)
             j = j+1
 
         #config = MKTFLILALL
@@ -56,29 +58,30 @@ class Gliadin:
         self.disulfideBonds.append([position1,position2])
 
     def randomTranslate(self,i):
-        self.aminoacids[i].translate()
+        #self.aminoacids[i].translate()
+        self.atoms[i].translate()
         if not self.validChain():
             self.revertPosition(i)
 
     def revertPosition(self,i):
-        self.aminoacids[i].revertPosition()
+        self.atoms[i].revertPosition()
 
     def getAminoAcidAtPosition(self,i):
-        return(self.aminoacids[i])
+        return(self.atoms[i])
 
-    def getAminoAcids(self):
-        return(self.aminoacids)
+    def getAtoms(self):
+        return(self.atoms)
 
     def getLength(self):
-        return len(self.aminoacids)
+        return len(self.atoms)
 
     def getEnergy(self):
-        energy = [self.aminoacids[i].getLennartJonesPotential(self.aminoacids[j]) for i in range(len(self.aminoacids)) for j in range(len(self.aminoacids)) if i != j ]
+        energy = [self.atoms[i].getLennartJonesPotential(self.atoms[j]) for i in range(len(self.atoms)) for j in range(len(self.atoms)) if i != j ]
         energy = sum(energy)
         return energy
 
     def getPositions(self):
-        return [self.aminoacids[i].getPosition() for i in range(self.getLength())]
+        return [self.atoms[i].getPosition() for i in range(self.getLength())]
 
     def _unit_vector(self,vector):
         """ Returns the unit vector of the vector.  """
@@ -86,9 +89,9 @@ class Gliadin:
 
     def getAngle(self,i,j,k):
         #coordinates are (x,y,z) tuples
-        p1 = self.aminoacids[i].getPosition()
-        p2 = self.aminoacids[j].getPosition()
-        p3 = self.aminoacids[k].getPosition()
+        p1 = self.atoms[i].getPosition()
+        p2 = self.atoms[j].getPosition()
+        p3 = self.atoms[k].getPosition()
 
         v1 = (p2[0] - p1[0],p2[1]-p1[0],p2[2]-p1[2])
         v2 = (p3[0] - p2[0],p3[1]-p2[0],p3[2]-p2[2])
@@ -101,21 +104,21 @@ class Gliadin:
 
     def validChain(self):
         result = True
-        for i in range(len(self.aminoacids)):
-            for j in range(len(self.aminoacids)):
+        for i in range(len(self.atoms)):
+            for j in range(len(self.atoms)):
                 if i != j:
-                    coor1 = self.aminoacids[i].getPosition()
-                    coor2 = self.aminoacids[j].getPosition()
-                    radius1 = self.aminoacids[i].getRadius()
-                    radius2 = self.aminoacids[j].getRadius()
+                    coor1 = self.atoms[i].getPosition()
+                    coor2 = self.atoms[j].getPosition()
+                    radius1 = self.atoms[i].getRadius()
+                    radius2 = self.atoms[j].getRadius()
                     dist = math.sqrt((coor1[0] - coor2[0])**2 + (coor1[1] - coor2[1])**2 + (coor1[2] - coor2[2])**2)
                     if dist < radius1 + radius2:
                         result = False
                         break
 
-        for i in range(len(self.aminoacids)):
-            for j in range(i+1,len(self.aminoacids)):
-                for k in range(j+1,len(self.aminoacids)):
+        for i in range(len(self.atoms)):
+            for j in range(i+1,len(self.atoms)):
+                for k in range(j+1,len(self.atoms)):
                     if self.getAngle(i,j,k) > 2.0944:
                         result = False
                         break
