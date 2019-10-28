@@ -59,7 +59,7 @@ class Gliadin:
 
     def randomTranslate(self,i):
         #self.aminoacids[i].translate()
-        self.atoms[i].translate()
+        self.atoms[i].translate(1.5)
         if not self.validChain():
             self.revertPosition(i)
 
@@ -81,7 +81,7 @@ class Gliadin:
         return energy
 
     def getPositions(self):
-        return [self.atoms[i].getPosition() for i in range(self.getLength())]
+        return [self.atoms[i].getCoor() for i in range(self.getLength())]
 
     def _unit_vector(self,vector):
         """ Returns the unit vector of the vector.  """
@@ -89,9 +89,9 @@ class Gliadin:
 
     def getAngle(self,i,j,k):
         #coordinates are (x,y,z) tuples
-        p1 = self.atoms[i].getPosition()
-        p2 = self.atoms[j].getPosition()
-        p3 = self.atoms[k].getPosition()
+        p1 = self.atoms[i].getCoor()
+        p2 = self.atoms[j].getCoor()
+        p3 = self.atoms[k].getCoor()
 
         v1 = (p2[0] - p1[0],p2[1]-p1[0],p2[2]-p1[2])
         v2 = (p3[0] - p2[0],p3[1]-p2[0],p3[2]-p2[2])
@@ -107,8 +107,8 @@ class Gliadin:
         for i in range(len(self.atoms)):
             for j in range(len(self.atoms)):
                 if i != j:
-                    coor1 = self.atoms[i].getPosition()
-                    coor2 = self.atoms[j].getPosition()
+                    coor1 = self.atoms[i].getCoor()
+                    coor2 = self.atoms[j].getCoor()
                     radius1 = self.atoms[i].getRadius()
                     radius2 = self.atoms[j].getRadius()
                     dist = math.sqrt((coor1[0] - coor2[0])**2 + (coor1[1] - coor2[1])**2 + (coor1[2] - coor2[2])**2)

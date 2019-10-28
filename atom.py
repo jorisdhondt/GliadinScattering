@@ -29,9 +29,12 @@ class Atom:
         return self.radius
 
     def getLennartJonesPotential(self,atom):
+        #epsilon = 1
+        epsilon = 0.156 #epsilon for water
+        sigma = 1.25
         coor1 = atom.getCoor()
         coor2 = self.getCoor()
-        r = sqrt((coor1[0] - coor2[0])**2 + (coor1[1] - coor2[1])**2 + (coor1[2] - coor2[2])**2)
+        r = math.sqrt((coor1[0] - coor2[0])**2 + (coor1[1] - coor2[1])**2 + (coor1[2] - coor2[2])**2)
         power = 4*epsilon*((sigma/r)**12 - ((sigma/r))**6)
         return power
 
