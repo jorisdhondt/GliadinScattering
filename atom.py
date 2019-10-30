@@ -42,11 +42,23 @@ class Atom:
 
 
     def translate(self,translate_max):
+        self.previousCoor = self.coor
         x_shift = random.uniform(-translate_max, translate_max)
         y_shift = random.uniform(-translate_max, translate_max)
         z_shift = random.uniform(-translate_max, translate_max)
+        x = float(self.coor[0])
+        y = float(self.coor[1])
+        z = float(self.coor[2])
 
-        self.coor = self.coor + (x_shift,y_shift,z_shift)
+        delta = (x_shift, y_shift, z_shift)
+        self.coor = tuple(sum(t) for t in zip(self.coor, delta))
+
+        #self.coor = (x+x_shift,y+y_shift,z+z_shift)
+        #self.coor = self.coor + (x_shift,y_shift,z_shift)
+
+    def revertPosition(self):
+        self.coor = self.previousCoor
+        self.previousCoor = None
 
     def rotate(self):
         #not_necessary
