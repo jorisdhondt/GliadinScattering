@@ -119,7 +119,8 @@ class Gliadin:
         for i in range(len(self.atoms)):
             for j in range(i+1,len(self.atoms)):
                 for k in range(j+1,len(self.atoms)):
-                    if self.getAngle(i,j,k) > 2.0944:
+                    print(self.getAngle(i,j,k))
+                    if self.getAngle(i,j,k) > 2.094 and self.getAngle(i,j,k) < 2.095:
                         result = False
                         break
         return result

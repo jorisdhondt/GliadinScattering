@@ -63,9 +63,9 @@ import pandas as pd
 #t = np.array([np.ones(100)*i for i in range(20)]).flatten()
 #df = pd.DataFrame({"time": t ,"x" : a[:,0], "y" : a[:,1], "z" : a[:,2]})
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-title = ax.set_title('3D Test')
+#fig = plt.figure()
+#ax = fig.add_subplot(111, projection='3d')
+#title = ax.set_title('3D Test')
 
 def update_graph(num):
     data=positionsHistory[positionsHistory['time']==num]
@@ -89,16 +89,16 @@ nreject = 0
 with open('first_setup.json') as json_file:
     input_json = json.load(json_file)
 
-    nbofiterations = 1000
+    nbofiterations = 50
 
-    gliadin_medium = Medium(input_json['sequenced'], input_json['aminoacid'])
+    gliadin_medium = Medium(input_json['sequenceb'], input_json['aminoacid'])
     mediumSize = gliadin_medium.getNbOfGliadin()
     #water
 
     old_energy = gliadin_medium.getEnergy()
     positionsHistory = pd.DataFrame()
-
-    for i in range(nbofiterations):
+    i = 1
+    while i in range(nbofiterations):
         print("Iteration "+str(i))
         # Pick a random atom (random.randint(x,y) picks a random
         # integer between x and y, including x and y)
@@ -135,6 +135,18 @@ with open('first_setup.json') as json_file:
             # accept the move
             naccept += 1
             total_energy = new_energy
+
+            positions = gliadin.getPositions()
+            df = pd.DataFrame(positions, columns=['x', 'y', 'z'])
+            df['time'] = i
+            if i == 0:
+                df['time'] = i
+                positionsHistory = df
+                # positionsHistory = pd.DataFrame({"time": i, "x": df[:, 'X'], "y": df[:, 'Y'], "z": df[:, 'Z']})
+            else:
+                positionsHistory = pd.concat([positionsHistory, df])
+
+            i = i + 1
         else:
             # reject the move - restore the old coordinates
             gliadin.revertPosition(selectedAminoAcid)
@@ -143,17 +155,17 @@ with open('first_setup.json') as json_file:
 
         print("Lowest energy: "+str(total_energy))
         print(gliadin.getPositions())
-        positions = gliadin.getPositions()
-        df = pd.DataFrame(positions, columns=['x', 'y', 'z'])
-        df['time'] = i
-        if i ==0:
-            df['time'] = i
-            positionsHistory = df
-            #positionsHistory = pd.DataFrame({"time": i, "x": df[:, 'X'], "y": df[:, 'Y'], "z": df[:, 'Z']})
-        else:
-            positionsHistory = pd.concat([positionsHistory, df])
-
-        i = i+1
+        # positions = gliadin.getPositions()
+        # df = pd.DataFrame(positions, columns=['x', 'y', 'z'])
+        # df['time'] = i
+        # if i ==0:
+        #     df['time'] = i
+        #     positionsHistory = df
+        #     #positionsHistory = pd.DataFrame({"time": i, "x": df[:, 'X'], "y": df[:, 'Y'], "z": df[:, 'Z']})
+        # else:
+        #     positionsHistory = pd.concat([positionsHistory, df])
+        #
+        # i = i+1
         #ax.scatter3D(df['X'], df['Y'],df['Z'], c=df['Z'], cmap='Greens');
 
 
@@ -214,9 +226,9 @@ with open('first_setup.json') as json_file:
     #lines = ax.plot([VecStart_x[i], VecEnd_x[i]], [VecStart_y[i], VecEnd_y[i]], zs=[VecStart_z[i], VecEnd_z[i]])
     #lines = [ax.plot(dat.x)[0] for dat in data]
     graph = ax.scatter(data.x, data.y, data.z)
-    ax.set_xlim([-5, 5])
-    ax.set_ylim([-5, 50])
-    ax.set_zlim([-5, 5])
+    ax.set_xlim([-10, 10])
+    ax.set_ylim([-10, 10])
+    ax.set_zlim([-10, 10])
     plt.gca().set_aspect('equal', adjustable='box')
     #plt.axis('scaled')
     #lines = [ax.plot(dat[0, 0:1], dat[1, 0:1], dat[2, 0:1])[0] for dat in data]

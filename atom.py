@@ -52,6 +52,7 @@ class Atom:
 
         delta = (x_shift, y_shift, z_shift)
         self.coor = tuple(sum(t) for t in zip(self.coor, delta))
+        print(self.coor)
 
         #self.coor = (x+x_shift,y+y_shift,z+z_shift)
         #self.coor = self.coor + (x_shift,y_shift,z_shift)
