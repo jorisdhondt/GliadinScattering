@@ -13,6 +13,7 @@ from matplotlib import pyplot as plt
 from mpl_toolkits import mplot3d
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation
+import mpl_toolkits.mplot3d.axes3d as p3
 
 
 # def init():
@@ -72,16 +73,20 @@ def update_graph(num):
     graph._offsets3d = (data.x, data.y, data.z)
     title.set_text('3D Test, time={}'.format(num))
 
-def update_lines(num,lines):
-    data = positionsHistory[positionsHistory['time'] == num]
-    graph._offsets3d = (data.x, data.y, data.z)
-    title.set_text('3D Test, time={}'.format(num))
+def update_graph3D(num,data,line):
+    line.set_data(data[:2, :num])
+    line.set_3d_properties(data[2, :num])
 
-
-    for line, data in zip(lines, dataLines):
-        # NOTE: there is no .set_data() for 3 dim data...
-        line.set_data(data[0:2, :num])
-        line.set_3d_properties(data[2, :num])
+# def update_lines(num,lines):
+#     data = positionsHistory[positionsHistory['time'] == num]
+#     graph._offsets3d = (data.x, data.y, data.z)
+#     title.set_text('3D Test, time={}'.format(num))
+#
+#
+#     for line, data in zip(lines, dataLines):
+#         # NOTE: there is no .set_data() for 3 dim data...
+#         line.set_data(data[0:2, :num])
+#         line.set_3d_properties(data[2, :num])
 
 
 naccept = 0
@@ -91,7 +96,7 @@ with open('first_setup.json') as json_file:
 
     nbofiterations = 50
 
-    gliadin_medium = Medium(input_json['sequenceb'], input_json['aminoacid'])
+    gliadin_medium = Medium(input_json['sequencec'], input_json['aminoacid'])
     mediumSize = gliadin_medium.getNbOfGliadin()
     #water
 
@@ -213,8 +218,9 @@ with open('first_setup.json') as json_file:
     ax = fig.add_subplot(111, projection='3d')
     title = ax.set_title('3D Test')
 
-    data = positionsHistory[positionsHistory['time'] == 0]
+    data = positionsHistory[positionsHistory['time'] == 1]
     q = range(len(data))
+    #q = data.shape[0]
     #l = [([data[i,'x'],data[i+1,'x']],[data[i,'y'],data[i+1,'y']],[data[i,'z'],data[i+1,'z']) for i in range(len(data)-1)]
     #lines = [ax.plot([data[i,'x'],data[i+1,'x']],[data[i,'y'],data[i+1,'y']],zs = [data[i,'z'],data[i+1,'z']]) for i in range(len(data)-1)]
     #lines = [
@@ -225,13 +231,31 @@ with open('first_setup.json') as json_file:
 
     #lines = ax.plot([VecStart_x[i], VecEnd_x[i]], [VecStart_y[i], VecEnd_y[i]], zs=[VecStart_z[i], VecEnd_z[i]])
     #lines = [ax.plot(dat.x)[0] for dat in data]
-    graph = ax.scatter(data.x, data.y, data.z)
+
+    graph = ax.scatter(data.x, data.y, data.z,marker = 'o',c=q, cmap='Set1')
+    #print(data.iloc[1])
+    #print(data.iloc[1,1])
+    #[print(dat.loc['x']) for dat in data]
+    ##lines = [ax.plot(dat.iloc[0, 0:1], dat.iloc[1, 0:1], dat.iloc[2, 0:1])[0] for dat in data]
+    ##ax = p3.Axes3D(fig)
+    ##ax.set_xlim3D([-10, 10])
+    ##ax.set_ylim3D([-10, 10])
+    ##ax.set_zlim3D([-10, 10])
+    ##ani = matplotlib.animation.FuncAnimation(fig, update_graph3D, nbofiterations, fargs=(data, lines), blit=False)
+
+    #graph = ax.plot3D(data.x, data.y, data.z, 'gray')
+    #graph = ax.plot('x', 'y', data=data, linestyle='-', marker='o')
+
+
+
+
+
+
     ax.set_xlim([-10, 10])
     ax.set_ylim([-10, 10])
     ax.set_zlim([-10, 10])
     plt.gca().set_aspect('equal', adjustable='box')
-    #plt.axis('scaled')
-    #lines = [ax.plot(dat[0, 0:1], dat[1, 0:1], dat[2, 0:1])[0] for dat in data]
+
     ani = matplotlib.animation.FuncAnimation(fig, update_graph, nbofiterations,
                                              interval=100, blit=False)
 
