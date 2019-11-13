@@ -94,9 +94,9 @@ nreject = 0
 with open('first_setup.json') as json_file:
     input_json = json.load(json_file)
 
-    nbofiterations = 50
+    nbofiterations = 300
 
-    gliadin_medium = Medium(input_json['sequencec'], input_json['aminoacid'])
+    gliadin_medium = Medium(input_json['sequencea'], input_json['aminoacid'])
     mediumSize = gliadin_medium.getNbOfGliadin()
     #water
 

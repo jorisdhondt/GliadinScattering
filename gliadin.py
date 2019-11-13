@@ -13,14 +13,14 @@ class Gliadin:
         j=0
         for i in sequence:
             if j == 0:
-                newAtom = Atom(initialCoor, 0.3)
+                newAtom = Atom(initialCoor, 0.3,i)
                 self.addAtom(newAtom)
             else:
                 if j%2 == 1:
                     coor = (j*1.299,-0.75,0)
                 else:
                     coor = (j * 1.299, 0 , 0)
-                newAtom = Atom(coor, 0.3)
+                newAtom = Atom(coor, 0.3,i)
                 self.addAtom(newAtom)
             j = j+1
 
@@ -59,9 +59,12 @@ class Gliadin:
 
     def randomTranslate(self,i):
         #self.aminoacids[i].translate()
-        self.atoms[i].translate(1.5)
-        if not self.validChain():
-            self.revertPosition(i)
+        breakLoop = False
+        while (not breakLoop):
+            self.atoms[i].translate(1.5)
+            if not self.validChain():
+                self.revertPosition(i)
+            else: breakLoop = True
 
     def revertPosition(self,i):
         self.atoms[i].revertPosition()
@@ -76,7 +79,7 @@ class Gliadin:
         return len(self.atoms)
 
     def getEnergy(self):
-        energy = [self.atoms[i].getLennartJonesPotential(self.atoms[j]) for i in range(len(self.atoms)) for j in range(len(self.atoms)) if i != j ]
+        energy = [self.atoms[i].getLennartJonesPotential(self.atoms[j]) + self.atoms[i].getElectroStaticEnergy(self.atoms[j]) for i in range(len(self.atoms)) for j in range(len(self.atoms)) if i != j ]
         energy = sum(energy)
         return energy
 
@@ -113,6 +116,9 @@ class Gliadin:
                     radius2 = self.atoms[j].getRadius()
                     dist = math.sqrt((coor1[0] - coor2[0])**2 + (coor1[1] - coor2[1])**2 + (coor1[2] - coor2[2])**2)
                     if dist < radius1 + radius2:
+                        result = False
+                        break
+                    if j == i +1 and dist > 1.5*1.3:
                         result = False
                         break
 

@@ -3,7 +3,7 @@ import random
 
 # Define an atom class
 class Atom:
-    def __init__(self, coor, radius):
+    def __init__(self, coor, radius,label):
         self.coor = coor
         self.radius = radius   #3 different sizes
 
@@ -21,6 +21,7 @@ class Atom:
 
         self.epsilon = 1
         self.sigma = 2
+        self.label = label
 
     def getCoor(self):
         return self.coor
@@ -38,7 +39,12 @@ class Atom:
         power = 4*epsilon*((sigma/r)**12 - ((sigma/r))**6)
         return power
 
-        #lattice new.
+    def getElectroStaticEnergy(self,atom):
+        coor1 = atom.getCoor()
+        coor2 = self.getCoor()
+        r = math.sqrt((coor1[0] - coor2[0])**2 + (coor1[1] - coor2[1])**2 + (coor1[2] - coor2[2])**2)
+        power = 0.2849*self.getElectricCharge()*atom.getElectricCharge()/r
+        return power
 
 
     def translate(self,translate_max):
@@ -64,3 +70,12 @@ class Atom:
     def rotate(self):
         #not_necessary
         print("irrelevant")
+
+
+    def getElectricCharge(self):
+        if self.label == 'K' or self.label == "R" or self.label == "H":
+            return 1
+        elif self.label == "D" or self.label == "E":
+            return -1
+        else:
+            return 0
